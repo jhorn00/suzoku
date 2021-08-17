@@ -1,5 +1,5 @@
 # suzoku
-This is a personal project to solve any (valid) sudoku board with opencv and Python.
+This is a personal project to solve any (valid) sudoku board with opencv and Python. Name inspired by my aunt Suzanne (Zani).
 
 This readme will be updated when the project reaches a functional state.
 
