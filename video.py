@@ -6,18 +6,21 @@ def contours(img):
     for i in contours:
         area = cv2.contourArea(i)
         print(area)
-        if area > 5000:
+        if area > 200:
             cv2.drawContours(imgContour, i, -1, (255, 0, 0), 3)
             perimeter = cv2.arcLength(i, True)
             approximation = cv2.approxPolyDP(i, 0.02 * perimeter, True)
             print(approximation)
+            # check if rectangle and continue if not
+            if len(approximation) != 4:
+                continue
             x, y, w, h = cv2.boundingRect(approximation)
             cv2.rectangle(imgContour, (x, y), (x + w, y + h), (0, 255, 0), 5)
             cropped = imgCopy[y:(y+h), x:(x+w)]
             cv2.imshow("Cropped Board", cropped)
 
 
-vid = cv2.VideoCapture(0)
+vid = cv2.VideoCapture("/dev/video2") # this video is for the second webcam on my laptop
 while(True):
     ret, img = vid.read()
     imgContour = img.copy()

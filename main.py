@@ -17,6 +17,9 @@
 # print()
 # for i in range(0, len(testBoard)):
 #         print(testBoard[i])
+
+
+
 from static import *
-path = 'test_images/testbrd2.png'
+path = 'test_images/rects.png'
 staticImage(path)
