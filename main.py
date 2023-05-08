@@ -21,5 +21,9 @@
 
 
 from static import *
-path = 'test_images/rects.png'
+# path = 'test_images/rects.png'
+# path = 'test_images/toughBoard.png'
+# path = 'test_images/testbrd1.jpg'
+path = 'test_images/easyBoard.png'
+# path = 'test_images/testbrd2solved.png'
 staticImage(path)
