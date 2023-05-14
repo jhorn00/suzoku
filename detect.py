@@ -1,5 +1,6 @@
 import cv2
 import numpy as np
+import pytesseract
 
 # Takes in prepped image, image, and an unedited original, original.
 # Produces a list of candidate boards consisting of images cropped from the original.
@@ -98,43 +99,56 @@ def detectSquares(image, original):
                 newCoords = [x, y, w, h]
                 resultingSquares.append(newCoords)
                 # Draw rectangle
-                cv2.rectangle(original, (x, y), (x + w, y + h), (0, 255, 0), 5)
+                # cv2.rectangle(original, (x, y), (x + w, y + h), (0, 255, 0), 5)
             
     cv2.imshow("im", image)
     cv2.imshow("small squares", original)
-    cv2.waitKey(2000)
+    # cv2.waitKey(2000)
     return resultingSquares
 
 def populateArray(squaresList, candidateImage):
+    # height and width are unused rn
     imageHeight = candidateImage.shape[0]
     imageWidth = candidateImage.shape[1]
-    heightScale = imageHeight / 9
-    widthScale = imageWidth / 9
-    plocations = []
-    ilocations = []
+    print("Unsorted squaresList:")
     for s in squaresList:
-        # x = s[0] / widthScale
-        # y = s[1] / heightScale
-        plocations.append([s[0], s[1]])
-        # ilocations.append([x, y])
+        print(str(s))
     squaresList.sort(key=lambda x: (x[0], x[1]))
-    print("Pixel Locations:")
-    for p in plocations:
-        print(str(p))
-    # print("Index Locations:")
-    # for i in ilocations:
-    #     print(str(i))
     print("Sorted squaresList:")
     for s in squaresList:
         print(str(s))
-    # SHOULD BE USING THE SORTED LIST TO INSERT FOR THE ARRAY
-    # NOW, SHOULD BE ABLE TO GO THROUGH AND READ DIGITS (if any)
-    # AND INSERT THEM IN-ORDER
+    return squaresList
     
     
 
-def detectDigits():
-    print("detectDigits() does nothing yet.")
+def detectDigits(squaresList, candidateImage):
+    if len(squaresList) != 81:
+        print("\n\n81 SQUARES HAVE NOT BEEN DETECTED\n\n")
+    print("Printing Digits:")
+    digitList = []
+    charConfig = r"--psm 10 --oem 3"
+    columnList = []
+    for s in squaresList:    
+        croppedImage = candidateImage[s[1]:(s[1]+s[3]), s[0]:(s[0]+s[2])]
+        cv2.cvtColor(croppedImage, cv2.COLOR_BGR2RGB)
+        # cv2.imshow("cropped candidate image", croppedImage)
+        digit = pytesseract.image_to_string(croppedImage, config=charConfig)
+        # print("-" + digit + "-")
+        digit = digit.strip()
+        if digit.isdigit():
+            num = int(digit)
+            print(num)
+            columnList.append(num)
+        else:
+            print(0)
+            columnList.append(0)
+        if len(columnList) == 9:
+            digitList.append(columnList.copy())
+            columnList.clear()
+    print(digitList)
+    res = [list(i) for i in zip(*digitList)]
+    print(res)
+    return res
 
 def detectBoard(image):
     print("detectBoard() does nothing yet.")

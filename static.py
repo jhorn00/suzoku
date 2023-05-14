@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 from detect import *
+from solver import *
 
 def prepImage(image):
     # Convert image to gray
@@ -35,15 +36,51 @@ def staticImage(path):
     # cv2.imshow("cropped", cropped[1])
     # small = detectSquares(prepImage(cropped[1]), cropped[1])
     for c in cropped:
+        withDigits = c.copy() #####
         resultingSquares = detectSquares(prepImage(c), c)
         print("Squares found: " + str(len(resultingSquares)))
         print(str(resultingSquares))
-        populateArray(resultingSquares, c)
-        # print("Resulting squares: " + str(resultingSquares))
+        squaresArray = populateArray(resultingSquares, c)
+        for s in squaresArray:
+            print(str(s))
+            # cv2.putText(withDigits, "9", (s[0] + int(s[2] / 4), s[1] + int(s[3] * 0.75)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 4, cv2.LINE_AA)
+        # cv2.imshow("With Test Digits", withDigits) #####
+        # detect existing characters
+        boardArray = detectDigits(squaresArray, c)
+        originalBoardArray = boardArray.copy()
+        originalBoardArray = [list(i) for i in zip(*originalBoardArray)]
+        orBoArr1D_List = []
+        print("originalBoardArray" + str(originalBoardArray))
+        for i in originalBoardArray:
+            print("i" + str(i))
+            for j in i:
+                print("j" + str(j))
+                orBoArr1D_List.append(j)
+        print(validate(boardArray))
+        if validate(boardArray):
+            ans = solve(boardArray, 0, 0)
+            print(ans)
+            for i in range(0, len(boardArray)):
+                print(boardArray[i])
+            toDraw = [list(i) for i in zip(*boardArray)]
+            print("toDraw" + str(toDraw))
+            correspondingSquare = 0
+            for i in toDraw:
+                for j in i:
+                    print("j" + str(j))
+                    s = squaresArray[correspondingSquare]
+                    print("s" + str(s))
+                    print("orBoArr1D_List[corr...]" + str(orBoArr1D_List[correspondingSquare]))
+                    if orBoArr1D_List[correspondingSquare] == 0:
+                        cv2.putText(withDigits, str(j), (s[0] + int(s[2] / 4), s[1] + int(s[3] * 0.75)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 4, cv2.LINE_AA)
+                    correspondingSquare += 1
+            cv2.imshow("With Solved Digits", withDigits) # DONE!
+            cv2.imwrite("output/solvedBoard.png", withDigits)
 
+        else:
+            print("Board is not valid.")
     cropCopy = cropped.copy()
     # detectSquares(cropped, cropCopy)
-    
     # Show images
     # cv2.imshow("Cropped Board", cropped)
     # cv2.imshow("Gray", imgGray)
