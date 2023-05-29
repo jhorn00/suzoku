@@ -113,8 +113,6 @@ def populateArray(squaresList, candidateImage):
         print(str(s))
     return squaresList
     
-    
-
 def detectDigits(squaresList, candidateImage):
     if len(squaresList) != 81:
         print("\n\n81 SQUARES HAVE NOT BEEN DETECTED\n\n")
@@ -141,6 +139,3 @@ def detectDigits(squaresList, candidateImage):
     res = [list(i) for i in zip(*digitList)]
     print(res)
     return res
-
-def detectBoard(image):
-    print("detectBoard() does nothing yet.")

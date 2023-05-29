@@ -17,4 +17,9 @@ https://www.geeksforgeeks.org/sudoku-backtracking-7/
 
 ## TODO
  - detectCandidates() will return a list with the cropped original image. Later, it may be desireable to move back to returning crops of the prepped image. For development, it would be nicer to leave as-is.
- 
+ Needed for future features:
+- better method for specifying input and output
+- venv and package management for publication
+- trained board model for messy images
+- most likely want a way to toggle simple board detection using current CV logic and a trained model
+- detectBoard function to select detection method and make calls accordingly
