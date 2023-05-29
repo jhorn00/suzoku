@@ -13,8 +13,6 @@ https://en.wikipedia.org/wiki/Backtracking
 
 https://www.geeksforgeeks.org/sudoku-backtracking-7/
 
-
-
 ## TODO
  - detectCandidates() will return a list with the cropped original image. Later, it may be desireable to move back to returning crops of the prepped image. For development, it would be nicer to leave as-is.
  Needed for future features:

@@ -98,7 +98,6 @@ def detectSquares(image, original):
                 x, y, w, h = cv2.boundingRect(approximation)
                 newCoords = [x, y, w, h]
                 resultingSquares.append(newCoords)
-            
     cv2.imshow("im", image)
     cv2.imshow("small squares", original)
     return resultingSquares

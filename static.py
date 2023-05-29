@@ -68,7 +68,6 @@ def staticImage(path):
                     correspondingSquare += 1
             cv2.imshow("With Solved Digits", withDigits) # DONE!
             cv2.imwrite("output/solvedBoard.png", withDigits)
-
         else:
             print("Board is not valid.")
     cropCopy = cropped.copy()

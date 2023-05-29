@@ -18,8 +18,6 @@
 # for i in range(0, len(testBoard)):
 #         print(testBoard[i])
 
-
-
 from static import *
 # path = 'test_images/rects.png'
 # path = 'test_images/toughBoard.png'
