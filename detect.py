@@ -98,18 +98,12 @@ def detectSquares(image, original):
                 x, y, w, h = cv2.boundingRect(approximation)
                 newCoords = [x, y, w, h]
                 resultingSquares.append(newCoords)
-                # Draw rectangle
-                # cv2.rectangle(original, (x, y), (x + w, y + h), (0, 255, 0), 5)
             
     cv2.imshow("im", image)
     cv2.imshow("small squares", original)
-    # cv2.waitKey(2000)
     return resultingSquares
 
 def populateArray(squaresList, candidateImage):
-    # height and width are unused rn
-    imageHeight = candidateImage.shape[0]
-    imageWidth = candidateImage.shape[1]
     print("Unsorted squaresList:")
     for s in squaresList:
         print(str(s))
@@ -131,9 +125,7 @@ def detectDigits(squaresList, candidateImage):
     for s in squaresList:    
         croppedImage = candidateImage[s[1]:(s[1]+s[3]), s[0]:(s[0]+s[2])]
         cv2.cvtColor(croppedImage, cv2.COLOR_BGR2RGB)
-        # cv2.imshow("cropped candidate image", croppedImage)
         digit = pytesseract.image_to_string(croppedImage, config=charConfig)
-        # print("-" + digit + "-")
         digit = digit.strip()
         if digit.isdigit():
             num = int(digit)

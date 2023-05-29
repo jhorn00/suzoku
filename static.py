@@ -16,10 +16,6 @@ def prepImage(image):
     # Remove noise
     closing = cv2.morphologyEx(imageCanny, cv2.MORPH_CLOSE, kernel)
     # return final image
-    # cv2.imshow("Gray", imageGray)
-    # cv2.imshow("Blur", imageBlur)
-    # cv2.imshow("Canny", imageCanny)
-    # cv2.imshow("Dilated", imageDil)
     return closing
 
 def staticImage(path):
@@ -33,8 +29,6 @@ def staticImage(path):
     anotherCopy = image.copy()
     # for each candidate, consider the squares within the board
     print(len(cropped))
-    # cv2.imshow("cropped", cropped[1])
-    # small = detectSquares(prepImage(cropped[1]), cropped[1])
     for c in cropped:
         withDigits = c.copy() #####
         resultingSquares = detectSquares(prepImage(c), c)
@@ -43,8 +37,6 @@ def staticImage(path):
         squaresArray = populateArray(resultingSquares, c)
         for s in squaresArray:
             print(str(s))
-            # cv2.putText(withDigits, "9", (s[0] + int(s[2] / 4), s[1] + int(s[3] * 0.75)), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 4, cv2.LINE_AA)
-        # cv2.imshow("With Test Digits", withDigits) #####
         # detect existing characters
         boardArray = detectDigits(squaresArray, c)
         originalBoardArray = boardArray.copy()
@@ -80,13 +72,6 @@ def staticImage(path):
         else:
             print("Board is not valid.")
     cropCopy = cropped.copy()
-    # detectSquares(cropped, cropCopy)
-    # Show images
-    # cv2.imshow("Cropped Board", cropped)
-    # cv2.imshow("Gray", imgGray)
-    # cv2.imshow("Blur", imgBlur)
-    # cv2.imshow("Canny", imgCanny)
-    # cv2.imshow("Dilated", imgCanny)
-    # cv2.imshow("Contour", imgContour)
-    # cv2.imshow("Close", closing)
+
+    # Delay for images
     cv2.waitKey(8000)
